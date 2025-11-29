@@ -21,8 +21,8 @@ jobs:
           --health-retries=5
 
     env:
-      # Important: use the service name as host
-      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/habitdb
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/habit-api-db
+      SPRING_DATA_MONGODB_DATABASE: habit-api-db
 
     steps:
       - name: Checkout code
