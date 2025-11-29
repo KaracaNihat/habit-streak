@@ -1,0 +1,39 @@
+name: Frontend CI
+
+on:
+  pull_request:
+    paths:
+      - 'habit-streak-frontend/**'
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node 24
+        uses: actions/setup-node@v3
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: |
+          cd habit-streak-frontend
+          npm ci
+
+      - name: Lint (ESLint)
+        run: |
+          cd habit-streak-frontend
+          npm run lint
+
+      - name: Run tests
+        run: |
+          cd habit-streak-frontend
+          npm test -- --watch=false
+
+      - name: Build frontend
+        run: |
+          cd habit-streak-frontend
+          npm run build
