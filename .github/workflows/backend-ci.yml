@@ -31,6 +31,9 @@ jobs:
           cd habit-streak-backend
           ./mvnw spotless:check
 
+      - name: Wait for MongoDB to start
+        run: sleep 10
+
       - name: Build and Test Backend
         run: |
           cd habit-streak-backend
