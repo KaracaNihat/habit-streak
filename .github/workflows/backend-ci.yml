@@ -21,32 +21,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Make mvnw executable
-        run: chmod +x ./habit-streak-backend/mvnw
-
       - name: Setup JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Lint (Spotless Check)
-        run: |
-          cd habit-streak-backend
-          ./mvnw spotless:check
+      - name: Make mvnw executable
+        run: chmod +x ./habit-streak-backend/mvnw
 
       - name: Install MongoDB CLI
         run: |
           sudo apt-get update
-          sudo apt-get install -y mongodb-clients
+          sudo apt-get install -y mongodb-tools
 
-      - name: Wait for MongoDB to be ready
+      - name: Wait for MongoDB
         run: |
           for i in {1..30}; do
-            mongo --host mongo --eval "db.adminCommand('ping')" && break
+            mongosh --host mongo --eval "db.adminCommand({ ping: 1 })" && break
             echo "Waiting for MongoDB..."
             sleep 2
           done
+
+      - name: Lint (Spotless Check)
+        run: |
+          cd habit-streak-backend
+          ./mvnw spotless:check
 
       - name: Build and Test Backend
         run: |
