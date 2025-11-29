@@ -30,19 +30,6 @@ jobs:
       - name: Make mvnw executable
         run: chmod +x ./habit-streak-backend/mvnw
 
-      - name: Install MongoDB CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y mongodb-tools
-
-      - name: Wait for MongoDB
-        run: |
-          for i in {1..30}; do
-            mongosh --host mongo --eval "db.adminCommand({ ping: 1 })" && break
-            echo "Waiting for MongoDB..."
-            sleep 2
-          done
-
       - name: Lint (Spotless Check)
         run: |
           cd habit-streak-backend
