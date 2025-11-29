@@ -2,10 +2,11 @@
 # Backend (Spring Boot)
 # =================
 habit-streak-backend/target/
-habit-streak-backend/.mvn/wrapper/maven-wrapper.jar
 habit-streak-backend/src/main/resources/.env
 
+# =================
 # IDE files
+# =================
 habit-streak-backend/.idea/
 habit-streak-backend/*.iml
 
@@ -30,5 +31,4 @@ habit-streak-frontend/.idea/
 # =================
 # Maven / Gradle
 # =================
-.mvn/
 build/
