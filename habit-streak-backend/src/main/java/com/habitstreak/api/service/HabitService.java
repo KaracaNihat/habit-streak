@@ -23,4 +23,13 @@ public class HabitService {
   public Habit createHabit(Habit habit) {
     return habitRepository.insert(habit);
   }
+
+  public Optional<Habit> updateHabitName(String id, Habit newData) {
+    return getHabitById(id)
+        .map(
+            existingHabit -> {
+              existingHabit.setName(newData.getName());
+              return habitRepository.save(existingHabit);
+            });
+  }
 }

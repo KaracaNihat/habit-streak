@@ -28,4 +28,9 @@ public class HabitController {
     Habit createdHabit = habitService.createHabit(habit);
     return new ResponseEntity<>(createdHabit, HttpStatus.CREATED);
   }
+
+  @PutMapping("/habit/{id}")
+  public ResponseEntity<Habit> updateHabit(@PathVariable String id, @RequestBody Habit habit) {
+    return ResponseEntity.of(habitService.updateHabitName(id, habit));
+  }
 }
