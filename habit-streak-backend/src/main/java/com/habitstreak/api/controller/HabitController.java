@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/habits")
 public class HabitController {
-  @Autowired private HabitService habitService;
+  private final HabitService habitService;
+
+  public HabitController(HabitService habitService) {
+    this.habitService = habitService;
+  }
 
   @GetMapping
   public ResponseEntity<List<Habit>> getAllHabits() {

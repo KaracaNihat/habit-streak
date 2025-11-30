@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HabitService {
-  @Autowired private HabitRepository habitRepository;
+  private final HabitRepository habitRepository;
+
+  private HabitService(HabitRepository habitRepository) {
+    this.habitRepository = habitRepository;
+  }
 
   public List<Habit> getAllHabits() {
     return habitRepository.findAll();
