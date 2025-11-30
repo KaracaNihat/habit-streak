@@ -33,4 +33,13 @@ public class HabitController {
   public ResponseEntity<Habit> updateHabit(@PathVariable String id, @RequestBody Habit habit) {
     return ResponseEntity.of(habitService.updateHabitName(id, habit));
   }
+
+  @DeleteMapping("/habit/{id}")
+  public ResponseEntity<Void> deleteHabit(@PathVariable String id) {
+    if (habitService.deleteHabitById(id)) {
+      return ResponseEntity.noContent().build();
+    } else {
+      return ResponseEntity.notFound().build();
+    }
+  }
 }

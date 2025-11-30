@@ -32,4 +32,12 @@ public class HabitService {
               return habitRepository.save(existingHabit);
             });
   }
+
+  public Boolean deleteHabitById(String id) {
+    if (getHabitById(id).isPresent()) {
+      habitRepository.deleteById(id);
+      return true;
+    }
+    return false;
+  }
 }
