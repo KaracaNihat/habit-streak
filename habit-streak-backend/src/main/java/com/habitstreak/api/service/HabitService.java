@@ -4,16 +4,13 @@ import com.habitstreak.api.model.Habit;
 import com.habitstreak.api.repository.HabitRepository;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class HabitService {
   private final HabitRepository habitRepository;
-
-  private HabitService(HabitRepository habitRepository) {
-    this.habitRepository = habitRepository;
-  }
 
   public List<Habit> getAllHabits() {
     return habitRepository.findAll();

@@ -3,19 +3,16 @@ package com.habitstreak.api.controller;
 import com.habitstreak.api.model.Habit;
 import com.habitstreak.api.service.HabitService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/habits")
 public class HabitController {
   private final HabitService habitService;
-
-  public HabitController(HabitService habitService) {
-    this.habitService = habitService;
-  }
 
   @GetMapping
   public ResponseEntity<List<Habit>> getAllHabits() {
