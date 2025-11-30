@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/habits")
 public class HabitController {
   @Autowired private HabitService habitService;
 
@@ -18,7 +18,7 @@ public class HabitController {
     return new ResponseEntity<>(habitService.getAllHabits(), HttpStatus.OK);
   }
 
-  @GetMapping("/habit/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<Habit> getHabitById(@PathVariable String id) {
     return ResponseEntity.of(habitService.getHabitById(id));
   }
@@ -29,12 +29,12 @@ public class HabitController {
     return new ResponseEntity<>(createdHabit, HttpStatus.CREATED);
   }
 
-  @PutMapping("/habit/{id}")
+  @PutMapping("/{id}")
   public ResponseEntity<Habit> updateHabit(@PathVariable String id, @RequestBody Habit habit) {
     return ResponseEntity.of(habitService.updateHabitName(id, habit));
   }
 
-  @DeleteMapping("/habit/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteHabit(@PathVariable String id) {
     if (habitService.deleteHabitById(id)) {
       return ResponseEntity.noContent().build();
