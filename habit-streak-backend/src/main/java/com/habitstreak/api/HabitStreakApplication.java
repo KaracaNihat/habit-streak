@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class HabitStreakApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(HabitStreakApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(HabitStreakApplication.class, args);
+  }
 }

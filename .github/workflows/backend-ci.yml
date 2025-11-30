@@ -1,0 +1,41 @@
+name: Backend CI
+
+on:
+  pull_request:
+    paths:
+      - 'habit-streak-backend/**'
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+
+    services:
+      mongo:
+        image: mongo:6.0
+
+    env:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/habit-api-db
+      SPRING_DATA_MONGODB_DATABASE: habit-api-db
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Make mvnw executable
+        run: chmod +x ./habit-streak-backend/mvnw
+
+      - name: Lint (Spotless Check)
+        run: |
+          cd habit-streak-backend
+          ./mvnw spotless:check
+
+      - name: Build and Test Backend
+        run: |
+          cd habit-streak-backend
+          ./mvnw clean verify
