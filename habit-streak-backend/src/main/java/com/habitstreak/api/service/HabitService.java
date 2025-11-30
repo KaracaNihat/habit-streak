@@ -19,4 +19,8 @@ public class HabitService {
   public Optional<Habit> getHabitById(String id) {
     return habitRepository.findById(id);
   }
+
+  public Habit createHabit(Habit habit) {
+    return habitRepository.insert(habit);
+  }
 }
