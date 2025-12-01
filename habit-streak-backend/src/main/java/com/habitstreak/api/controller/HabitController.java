@@ -3,22 +3,23 @@ package com.habitstreak.api.controller;
 import com.habitstreak.api.model.Habit;
 import com.habitstreak.api.service.HabitService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
-@RequestMapping
+@RequestMapping("/api/habits")
 public class HabitController {
-  @Autowired private HabitService habitService;
+  private final HabitService habitService;
 
   @GetMapping
   public ResponseEntity<List<Habit>> getAllHabits() {
     return new ResponseEntity<>(habitService.getAllHabits(), HttpStatus.OK);
   }
 
-  @GetMapping("/habit/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<Habit> getHabitById(@PathVariable String id) {
     return ResponseEntity.of(habitService.getHabitById(id));
   }
@@ -29,12 +30,12 @@ public class HabitController {
     return new ResponseEntity<>(createdHabit, HttpStatus.CREATED);
   }
 
-  @PutMapping("/habit/{id}")
+  @PutMapping("/{id}")
   public ResponseEntity<Habit> updateHabit(@PathVariable String id, @RequestBody Habit habit) {
     return ResponseEntity.of(habitService.updateHabitName(id, habit));
   }
 
-  @DeleteMapping("/habit/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteHabit(@PathVariable String id) {
     if (habitService.deleteHabitById(id)) {
       return ResponseEntity.noContent().build();

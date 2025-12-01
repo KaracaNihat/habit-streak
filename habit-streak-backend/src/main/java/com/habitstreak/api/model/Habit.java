@@ -1,5 +1,7 @@
 package com.habitstreak.api.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +17,7 @@ public class Habit {
   @Id private String id;
   private String name;
   private Integer targetPerWeek;
-  private List<String> completedDays;
-  private String createdAt;
-  private Integer streak;
+  private List<LocalDate> completedDays = new ArrayList<>();
+  private LocalDate createdAt = LocalDate.now();
+  private Integer streak = 0;
 }
