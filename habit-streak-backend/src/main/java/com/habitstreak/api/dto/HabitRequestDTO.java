@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class HabitRequestDTO {
-    private String name;
-    private Integer targetPerWeek;
+  private String name;
+  private Integer targetPerWeek;
 }
