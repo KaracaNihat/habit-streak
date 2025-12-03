@@ -42,8 +42,13 @@ public class HabitController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Habit> updateHabit(@PathVariable String id, @RequestBody Habit habit) {
-    return ResponseEntity.of(habitService.updateHabitName(id, habit));
+  public ResponseEntity<HabitResponseDTO> updateHabit(
+      @PathVariable String id, @RequestBody HabitRequestDTO habitRequestDTO) {
+    Optional<Habit> updatedHabit =
+        habitService.updateHabitName(id, habitMapper.toModel(habitRequestDTO));
+    return updatedHabit
+        .map(habit -> ResponseEntity.accepted().body(habitMapper.toResponse(habit)))
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @DeleteMapping("/{id}")
