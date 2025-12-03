@@ -3,7 +3,9 @@ package com.habitstreak.api.mapper;
 import com.habitstreak.api.dto.HabitRequestDTO;
 import com.habitstreak.api.dto.HabitResponseDTO;
 import com.habitstreak.api.model.Habit;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HabitMapper {
 
   public Habit toModel(HabitRequestDTO dto) {

@@ -1,8 +1,12 @@
 package com.habitstreak.api.controller;
 
+import com.habitstreak.api.dto.HabitRequestDTO;
+import com.habitstreak.api.dto.HabitResponseDTO;
+import com.habitstreak.api.mapper.HabitMapper;
 import com.habitstreak.api.model.Habit;
 import com.habitstreak.api.service.HabitService;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,21 +17,28 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/habits")
 public class HabitController {
   private final HabitService habitService;
+  private final HabitMapper habitMapper;
 
   @GetMapping
-  public ResponseEntity<List<Habit>> getAllHabits() {
-    return new ResponseEntity<>(habitService.getAllHabits(), HttpStatus.OK);
+  public ResponseEntity<List<HabitResponseDTO>> getAllHabits() {
+    List<Habit> habits = habitService.getAllHabits();
+    List<HabitResponseDTO> habitResponseDTOS =
+        habits.stream().map(habitMapper::toResponse).toList();
+    return ResponseEntity.ok(habitResponseDTOS);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Habit> getHabitById(@PathVariable String id) {
-    return ResponseEntity.of(habitService.getHabitById(id));
+  public ResponseEntity<HabitResponseDTO> getHabitById(@PathVariable String id) {
+    Optional<HabitResponseDTO> dto = habitService.getHabitById(id).map(habitMapper::toResponse);
+    return ResponseEntity.of(dto);
   }
 
   @PostMapping
-  public ResponseEntity<Habit> createHabit(@RequestBody Habit habit) {
-    Habit createdHabit = habitService.createHabit(habit);
-    return new ResponseEntity<>(createdHabit, HttpStatus.CREATED);
+  public ResponseEntity<HabitResponseDTO> createHabit(
+      @RequestBody HabitRequestDTO habitRequestDTO) {
+    Habit habit = habitService.createHabit(habitMapper.toModel(habitRequestDTO));
+    HabitResponseDTO responseDTO = habitMapper.toResponse(habit);
+    return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
   }
 
   @PutMapping("/{id}")
