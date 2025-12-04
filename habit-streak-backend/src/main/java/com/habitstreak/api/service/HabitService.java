@@ -4,6 +4,7 @@ import com.habitstreak.api.model.Habit;
 import com.habitstreak.api.repository.HabitRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class HabitService {
     return habitRepository.findAll();
   }
 
-  public Optional<Habit> getHabitById(String id) {
+  public Optional<Habit> getHabitById(UUID id) {
     return habitRepository.findById(id);
   }
 
@@ -24,7 +25,7 @@ public class HabitService {
     return habitRepository.insert(habit);
   }
 
-  public Optional<Habit> updateHabitName(String id, Habit newData) {
+  public Optional<Habit> updateHabitName(UUID id, Habit newData) {
     return getHabitById(id)
         .map(
             existingHabit -> {
@@ -33,7 +34,7 @@ public class HabitService {
             });
   }
 
-  public Boolean deleteHabitById(String id) {
+  public Boolean deleteHabitById(UUID id) {
     if (getHabitById(id).isPresent()) {
       habitRepository.deleteById(id);
       return true;

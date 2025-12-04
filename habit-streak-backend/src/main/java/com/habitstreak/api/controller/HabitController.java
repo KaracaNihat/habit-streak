@@ -8,6 +8,7 @@ import com.habitstreak.api.service.HabitService;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class HabitController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<HabitResponseDTO> getHabitById(@PathVariable String id) {
+  public ResponseEntity<HabitResponseDTO> getHabitById(@PathVariable UUID id) {
     Optional<HabitResponseDTO> dto = habitService.getHabitById(id).map(habitMapper::toResponse);
     return ResponseEntity.of(dto);
   }
@@ -44,7 +45,7 @@ public class HabitController {
 
   @PutMapping("/{id}")
   public ResponseEntity<HabitResponseDTO> updateHabit(
-      @PathVariable String id, @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
+      @PathVariable UUID id, @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
     Optional<Habit> updatedHabit =
         habitService.updateHabitName(id, habitMapper.toModel(habitRequestDTO));
     return updatedHabit
@@ -53,7 +54,7 @@ public class HabitController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteHabit(@PathVariable String id) {
+  public ResponseEntity<Void> deleteHabit(@PathVariable UUID id) {
     if (habitService.deleteHabitById(id)) {
       return ResponseEntity.noContent().build();
     } else {
