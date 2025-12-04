@@ -5,6 +5,7 @@ import com.habitstreak.api.dto.HabitResponseDTO;
 import com.habitstreak.api.mapper.HabitMapper;
 import com.habitstreak.api.model.Habit;
 import com.habitstreak.api.service.HabitService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class HabitController {
 
   @PostMapping
   public ResponseEntity<HabitResponseDTO> createHabit(
-      @RequestBody HabitRequestDTO habitRequestDTO) {
+      @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
     Habit habit = habitService.createHabit(habitMapper.toModel(habitRequestDTO));
     HabitResponseDTO responseDTO = habitMapper.toResponse(habit);
     return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
@@ -43,7 +44,7 @@ public class HabitController {
 
   @PutMapping("/{id}")
   public ResponseEntity<HabitResponseDTO> updateHabit(
-      @PathVariable String id, @RequestBody HabitRequestDTO habitRequestDTO) {
+      @PathVariable String id, @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
     Optional<Habit> updatedHabit =
         habitService.updateHabitName(id, habitMapper.toModel(habitRequestDTO));
     return updatedHabit
