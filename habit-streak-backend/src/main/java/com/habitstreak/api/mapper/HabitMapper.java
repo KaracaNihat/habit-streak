@@ -17,6 +17,7 @@ public class HabitMapper {
 
   public HabitResponseDTO toResponse(Habit habit) {
     HabitResponseDTO dto = new HabitResponseDTO();
+    dto.setId(habit.getId());
     dto.setName(habit.getName());
     dto.setTargetPerWeek(habit.getTargetPerWeek());
     dto.setCompletedDays(habit.getCompletedDays());
