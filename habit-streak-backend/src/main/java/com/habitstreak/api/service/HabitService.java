@@ -25,11 +25,14 @@ public class HabitService {
     return habitRepository.insert(habit);
   }
 
-  public Optional<Habit> updateHabitName(UUID id, Habit newData) {
+  public Optional<Habit> updateHabit(UUID id, Habit newData) {
     return getHabitById(id)
         .map(
             existingHabit -> {
               existingHabit.setName(newData.getName());
+              existingHabit.setTargetPerWeek(newData.getTargetPerWeek());
+              existingHabit.setCompletedDays(newData.getCompletedDays());
+              existingHabit.setStreak(newData.getStreak());
               return habitRepository.save(existingHabit);
             });
   }

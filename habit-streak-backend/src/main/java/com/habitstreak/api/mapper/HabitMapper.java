@@ -12,6 +12,8 @@ public class HabitMapper {
     Habit habit = new Habit();
     habit.setName(dto.getName());
     habit.setTargetPerWeek(dto.getTargetPerWeek());
+    habit.setCompletedDays(dto.getCompletedDays());
+    habit.setStreak(dto.getStreak());
     return habit;
   }
 

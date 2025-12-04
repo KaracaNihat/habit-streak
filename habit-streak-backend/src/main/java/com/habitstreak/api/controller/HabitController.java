@@ -47,7 +47,7 @@ public class HabitController {
   public ResponseEntity<HabitResponseDTO> updateHabit(
       @PathVariable UUID id, @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
     Optional<Habit> updatedHabit =
-        habitService.updateHabitName(id, habitMapper.toModel(habitRequestDTO));
+        habitService.updateHabit(id, habitMapper.toModel(habitRequestDTO));
     return updatedHabit
         .map(habit -> ResponseEntity.accepted().body(habitMapper.toResponse(habit)))
         .orElseGet(() -> ResponseEntity.notFound().build());
