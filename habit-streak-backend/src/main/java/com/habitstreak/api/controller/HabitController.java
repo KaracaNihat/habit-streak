@@ -5,10 +5,9 @@ import com.habitstreak.api.dto.HabitResponseDTO;
 import com.habitstreak.api.mapper.HabitMapper;
 import com.habitstreak.api.model.Habit;
 import com.habitstreak.api.service.HabitService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
