@@ -1,9 +1,9 @@
 package com.habitstreak.api.service;
 
+import com.habitstreak.api.exception.NotFoundException;
 import com.habitstreak.api.model.Habit;
 import com.habitstreak.api.repository.HabitRepository;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,31 +17,24 @@ public class HabitService {
     return habitRepository.findAll();
   }
 
-  public Optional<Habit> getHabitById(UUID id) {
-    return habitRepository.findById(id);
+  public Habit getHabitById(UUID id) {
+    return habitRepository.findById(id).orElseThrow(() -> new NotFoundException("Habit not found"));
   }
 
   public Habit createHabit(Habit habit) {
     return habitRepository.insert(habit);
   }
 
-  public Optional<Habit> updateHabit(UUID id, Habit newData) {
-    return getHabitById(id)
-        .map(
-            existingHabit -> {
-              existingHabit.setName(newData.getName());
-              existingHabit.setTargetPerWeek(newData.getTargetPerWeek());
-              existingHabit.setCompletedDays(newData.getCompletedDays());
-              existingHabit.setStreak(newData.getStreak());
-              return habitRepository.save(existingHabit);
-            });
+  public Habit updateHabit(UUID id, Habit newData) {
+    Habit habit = getHabitById(id);
+    habit.setName(newData.getName());
+    habit.setTargetPerWeek(newData.getTargetPerWeek());
+    habit.setCompletedDays(newData.getCompletedDays());
+    habit.setStreak(newData.getStreak());
+    return habitRepository.save(habit);
   }
 
-  public Boolean deleteHabitById(UUID id) {
-    if (getHabitById(id).isPresent()) {
-      habitRepository.deleteById(id);
-      return true;
-    }
-    return false;
+  public void deleteHabitById(UUID id) {
+    habitRepository.deleteById(getHabitById(id).getId());
   }
 }

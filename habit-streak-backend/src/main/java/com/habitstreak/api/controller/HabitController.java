@@ -7,7 +7,6 @@ import com.habitstreak.api.model.Habit;
 import com.habitstreak.api.service.HabitService;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,8 +30,8 @@ public class HabitController {
 
   @GetMapping("/{id}")
   public ResponseEntity<HabitResponseDTO> getHabitById(@PathVariable UUID id) {
-    Optional<HabitResponseDTO> dto = habitService.getHabitById(id).map(habitMapper::toResponse);
-    return ResponseEntity.of(dto);
+    HabitResponseDTO dto = habitMapper.toResponse(habitService.getHabitById(id));
+    return ResponseEntity.ok(dto);
   }
 
   @PostMapping
@@ -46,19 +45,14 @@ public class HabitController {
   @PutMapping("/{id}")
   public ResponseEntity<HabitResponseDTO> updateHabit(
       @PathVariable UUID id, @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
-    Optional<Habit> updatedHabit =
-        habitService.updateHabit(id, habitMapper.toModel(habitRequestDTO));
-    return updatedHabit
-        .map(habit -> ResponseEntity.accepted().body(habitMapper.toResponse(habit)))
-        .orElseGet(() -> ResponseEntity.notFound().build());
+    Habit habit = habitService.updateHabit(id, habitMapper.toModel(habitRequestDTO));
+    HabitResponseDTO updatedHabit = habitMapper.toResponse(habit);
+    return ResponseEntity.ok(updatedHabit);
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteHabit(@PathVariable UUID id) {
-    if (habitService.deleteHabitById(id)) {
-      return ResponseEntity.noContent().build();
-    } else {
-      return ResponseEntity.notFound().build();
-    }
+    habitService.deleteHabitById(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }
