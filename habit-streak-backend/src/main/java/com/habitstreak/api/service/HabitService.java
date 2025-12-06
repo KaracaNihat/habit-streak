@@ -1,5 +1,6 @@
 package com.habitstreak.api.service;
 
+import com.habitstreak.api.exception.AlreadyExistsException;
 import com.habitstreak.api.exception.NotFoundException;
 import com.habitstreak.api.model.Habit;
 import com.habitstreak.api.repository.HabitRepository;
@@ -22,6 +23,9 @@ public class HabitService {
   }
 
   public Habit createHabit(Habit habit) {
+    if (habitRepository.findByName(habit.getName()).isPresent()) {
+      throw new AlreadyExistsException("Habit with name already exists");
+    }
     return habitRepository.insert(habit);
   }
 
