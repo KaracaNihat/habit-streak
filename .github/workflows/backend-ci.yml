@@ -30,6 +30,9 @@ jobs:
       - name: Build and Test Backend
         env:
           SPRING_PROFILES_ACTIVE: test
+          MONGO_CLUSTER: ""
+          MONGO_USER: ""
+          MONGO_PASSWORD: ""
         run: |
           cd habit-streak-backend
           ./mvnw clean verify

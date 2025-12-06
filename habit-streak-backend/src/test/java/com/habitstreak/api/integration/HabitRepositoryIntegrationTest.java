@@ -13,17 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 
 @DataMongoTest
 @ActiveProfiles("test")
-@TestPropertySource(
-    properties = {
-      "spring.data.mongodb.port=0",
-      "spring.data.mongodb.database=testdb",
-      "spring.mongodb.embedded.version=4.11.0",
-      "spring.data.mongodb.uri="
-    })
 public class HabitRepositoryIntegrationTest {
   @Autowired HabitRepository habitRepository;
   private Habit habit;
