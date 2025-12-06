@@ -18,7 +18,8 @@ import org.springframework.test.context.TestPropertySource;
     properties = {
       "spring.data.mongodb.port=0",
       "spring.data.mongodb.database=testdb",
-      "spring.mongodb.embedded.version=4.11.0"
+      "spring.mongodb.embedded.version=4.11.0",
+      "spring.data.mongodb.uri="
     })
 class HabitServiceIntegrationTest {
   @Autowired private HabitService habitService;
