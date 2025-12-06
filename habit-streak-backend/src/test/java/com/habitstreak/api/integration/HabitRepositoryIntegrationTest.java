@@ -12,7 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 @DataMongoTest
 public class HabitRepositoryIntegrationTest {
   @Autowired HabitRepository habitRepository;
@@ -20,7 +22,7 @@ public class HabitRepositoryIntegrationTest {
 
   @BeforeEach
   void setUp() {
-    habitRepository.deleteAll(); // clean DB
+    habitRepository.deleteAll();
     habit = new Habit();
     habit.setId(UUID.randomUUID());
     habit.setName("Workout");
