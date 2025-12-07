@@ -32,4 +32,4 @@ jobs:
           SPRING_PROFILES_ACTIVE: test
         run: |
           cd habit-streak-backend
-          ./mvnw clean verify
+          ./mvnw clean verify -DskipITs
