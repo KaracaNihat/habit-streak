@@ -1,6 +1,6 @@
 package com.habitstreak.api.security;
 
-import com.habitstreak.api.user.UserRepository;
+import com.habitstreak.api.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

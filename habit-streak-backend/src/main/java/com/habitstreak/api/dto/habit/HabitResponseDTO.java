@@ -1,4 +1,4 @@
-package com.habitstreak.api.dto;
+package com.habitstreak.api.dto.habit;
 
 import java.time.LocalDate;
 import java.util.List;
