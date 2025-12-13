@@ -64,10 +64,11 @@ class HabitServiceTest {
 
   @Test
   void createHabitSuccess() {
+    UUID userId = UUID.randomUUID();
     when(habitRepository.findByName(habit.getName())).thenReturn(Optional.empty());
     when(habitRepository.insert(habit)).thenReturn(habit);
 
-    Habit result = habitService.createHabit(habit);
+    Habit result = habitService.createHabit(habit, userId);
 
     assertEquals(habit, result);
     verify(habitRepository).insert(habit);
@@ -75,9 +76,10 @@ class HabitServiceTest {
 
   @Test
   void attemptToCreateHabitWithExistingNameThrowsAlreadyExistsException() {
+    UUID userId = UUID.randomUUID();
     when(habitRepository.findByName(habit.getName())).thenReturn(Optional.of(habit));
 
-    assertThrows(AlreadyExistsException.class, () -> habitService.createHabit(habit));
+    assertThrows(AlreadyExistsException.class, () -> habitService.createHabit(habit, userId));
   }
 
   @Test

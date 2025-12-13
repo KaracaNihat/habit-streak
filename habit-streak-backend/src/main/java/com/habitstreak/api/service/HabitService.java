@@ -22,10 +22,11 @@ public class HabitService {
     return habitRepository.findById(id).orElseThrow(() -> new NotFoundException("Habit not found"));
   }
 
-  public Habit createHabit(Habit habit) {
+  public Habit createHabit(Habit habit, UUID userId) {
     if (habitRepository.findByName(habit.getName()).isPresent()) {
       throw new AlreadyExistsException("Habit with name already exists");
     }
+    habit.setUserId(userId);
     return habitRepository.insert(habit);
   }
 

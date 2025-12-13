@@ -21,4 +21,5 @@ public class Habit {
   private List<LocalDate> completedDays = new ArrayList<>();
   private LocalDate createdAt = LocalDate.now();
   private Integer streak = 0;
+  private UUID userId;
 }
