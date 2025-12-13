@@ -23,8 +23,9 @@ public class HabitController {
   private final HabitMapper habitMapper;
 
   @GetMapping
-  public ResponseEntity<List<HabitResponseDTO>> getAllHabits() {
-    List<Habit> habits = habitService.getAllHabits();
+  public ResponseEntity<List<HabitResponseDTO>> getAllHabitsByUserId() {
+    User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    List<Habit> habits = habitService.getAllHabits(currentUser.getId());
     List<HabitResponseDTO> habitResponseDTOS =
         habits.stream().map(habitMapper::toResponse).toList();
     return ResponseEntity.ok(habitResponseDTOS);
@@ -39,6 +40,7 @@ public class HabitController {
   @PostMapping
   public ResponseEntity<HabitResponseDTO> createHabit(
       @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
+    // ToDo try extracting currentUser in root level for all method reduce duplication
     User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Habit habit =
         habitService.createHabit(habitMapper.toModel(habitRequestDTO), currentUser.getId());

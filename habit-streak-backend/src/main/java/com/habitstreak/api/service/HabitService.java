@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 public class HabitService {
   private final HabitRepository habitRepository;
 
-  public List<Habit> getAllHabits() {
-    return habitRepository.findAll();
+  public List<Habit> getAllHabits(UUID userId) {
+    return habitRepository.findAllByUserId(userId);
   }
 
   public Habit getHabitById(UUID id) {

@@ -36,10 +36,11 @@ class HabitServiceTest {
 
   @Test
   void getAllHabitsShouldReturnListOfHabits() {
+    UUID userId = UUID.randomUUID();
     List<Habit> allHabits = List.of(habit);
     when(habitRepository.findAll()).thenReturn(allHabits);
 
-    List<Habit> result = habitService.getAllHabits();
+    List<Habit> result = habitService.getAllHabits(userId);
 
     assertEquals(1, result.size());
     assertEquals(habit, result.get(0));
