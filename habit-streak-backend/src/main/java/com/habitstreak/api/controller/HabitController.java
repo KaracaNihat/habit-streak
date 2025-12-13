@@ -5,12 +5,14 @@ import com.habitstreak.api.dto.HabitResponseDTO;
 import com.habitstreak.api.mapper.HabitMapper;
 import com.habitstreak.api.model.Habit;
 import com.habitstreak.api.service.HabitService;
+import com.habitstreak.api.user.User;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -37,7 +39,9 @@ public class HabitController {
   @PostMapping
   public ResponseEntity<HabitResponseDTO> createHabit(
       @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
-    Habit habit = habitService.createHabit(habitMapper.toModel(habitRequestDTO));
+    User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Habit habit =
+        habitService.createHabit(habitMapper.toModel(habitRequestDTO), currentUser.getId());
     HabitResponseDTO responseDTO = habitMapper.toResponse(habit);
     return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
   }
