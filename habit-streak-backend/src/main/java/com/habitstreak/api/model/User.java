@@ -1,4 +1,4 @@
-package com.habitstreak.api.user;
+package com.habitstreak.api.model;
 
 import java.util.UUID;
 import lombok.Data;

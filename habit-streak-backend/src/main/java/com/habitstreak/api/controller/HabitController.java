@@ -1,11 +1,11 @@
 package com.habitstreak.api.controller;
 
-import com.habitstreak.api.dto.HabitRequestDTO;
-import com.habitstreak.api.dto.HabitResponseDTO;
+import com.habitstreak.api.dto.habit.HabitRequestDTO;
+import com.habitstreak.api.dto.habit.HabitResponseDTO;
 import com.habitstreak.api.mapper.HabitMapper;
 import com.habitstreak.api.model.Habit;
+import com.habitstreak.api.model.User;
 import com.habitstreak.api.service.HabitService;
-import com.habitstreak.api.user.User;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.habitstreak.api.dto;
+package com.habitstreak.api.dto.habit;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
