@@ -23,7 +23,7 @@ public class HabitController {
   private final HabitMapper habitMapper;
 
   @GetMapping
-  public ResponseEntity<List<HabitResponseDTO>> getAllHabitsByUserId(
+  public ResponseEntity<List<HabitResponseDTO>> getAllHabits(
       @AuthenticationPrincipal User currentUser) {
     List<Habit> habits = habitService.getAllHabits(currentUser.getId());
     List<HabitResponseDTO> habitResponseDTOS =
