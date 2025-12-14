@@ -1,4 +1,4 @@
-package com.habitstreak.api.auth.dto;
+package com.habitstreak.api.dto.auth;
 
 import lombok.Data;
 
