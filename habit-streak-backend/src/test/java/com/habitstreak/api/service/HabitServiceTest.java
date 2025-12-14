@@ -23,6 +23,7 @@ class HabitServiceTest {
   @Mock HabitRepository habitRepository;
   @InjectMocks HabitService habitService;
   private Habit habit;
+  private final UUID userId = UUID.randomUUID();
 
   @BeforeEach
   void setUp() {
@@ -32,13 +33,13 @@ class HabitServiceTest {
     habit.setTargetPerWeek(3);
     habit.setCompletedDays(new ArrayList<>());
     habit.setStreak(0);
+    habit.setUserId(userId);
   }
 
   @Test
   void getAllHabitsShouldReturnListOfHabits() {
-    UUID userId = UUID.randomUUID();
     List<Habit> allHabits = List.of(habit);
-    when(habitRepository.findAll()).thenReturn(allHabits);
+    when(habitRepository.findAllByUserId(userId)).thenReturn(allHabits);
 
     List<Habit> result = habitService.getAllHabits(userId);
 
@@ -48,9 +49,9 @@ class HabitServiceTest {
 
   @Test
   void getHabitByIdShouldReturnHabit() {
-    when(habitRepository.findById(habit.getId())).thenReturn(Optional.of(habit));
+    when(habitRepository.findByIdAndUserId(habit.getId(), userId)).thenReturn(Optional.of(habit));
 
-    Habit result = habitService.getHabitById(habit.getId());
+    Habit result = habitService.getHabitById(habit.getId(), userId);
 
     assertEquals(habit, result);
   }
@@ -58,9 +59,9 @@ class HabitServiceTest {
   @Test
   void getHabitByIdWhenNotFoundShouldThrowNotFoundException() {
     UUID id = UUID.randomUUID();
-    when(habitRepository.findById(id)).thenReturn(Optional.empty());
+    when(habitRepository.findByIdAndUserId(id, userId)).thenReturn(Optional.empty());
 
-    assertThrows(NotFoundException.class, () -> habitService.getHabitById(id));
+    assertThrows(NotFoundException.class, () -> habitService.getHabitById(id, userId));
   }
 
   @Test
@@ -92,10 +93,10 @@ class HabitServiceTest {
     newData.setCompletedDays(List.of());
     newData.setStreak(2);
 
-    when(habitRepository.findById(id)).thenReturn(Optional.of(habit));
+    when(habitRepository.findByIdAndUserId(id, userId)).thenReturn(Optional.of(habit));
     when(habitRepository.save(habit)).thenReturn(habit);
 
-    Habit result = habitService.updateHabit(id, newData);
+    Habit result = habitService.updateHabit(id, newData, userId);
 
     assertEquals("Meditation", result.getName());
     assertEquals(5, result.getTargetPerWeek());
@@ -106,10 +107,10 @@ class HabitServiceTest {
   @Test
   void deleteHabitByIdSuccess() {
     UUID id = habit.getId();
-    when(habitRepository.findById(id)).thenReturn(Optional.of(habit));
-    doNothing().when(habitRepository).deleteById(id);
+    when(habitRepository.findByIdAndUserId(id, userId)).thenReturn(Optional.of(habit));
+    doNothing().when(habitRepository).deleteByIdAndUserId(id, userId);
 
-    assertDoesNotThrow(() -> habitService.deleteHabitById(id));
-    verify(habitRepository).deleteById(id);
+    assertDoesNotThrow(() -> habitService.deleteHabitById(id, userId));
+    verify(habitRepository).deleteByIdAndUserId(id, userId);
   }
 }

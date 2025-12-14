@@ -9,6 +9,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface HabitRepository extends MongoRepository<Habit, UUID> {
   Optional<Habit> findByName(String name);
 
+  Optional<Habit> findByIdAndUserId(UUID id, UUID userId);
+
   List<Habit> findAllByUserId(UUID userID);
 
+  void deleteByIdAndUserId(UUID id, UUID userId);
 }
