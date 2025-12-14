@@ -12,7 +12,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -21,11 +21,10 @@ import org.springframework.web.bind.annotation.*;
 public class HabitController {
   private final HabitService habitService;
   private final HabitMapper habitMapper;
-  private final User currentUser =
-      (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
   @GetMapping
-  public ResponseEntity<List<HabitResponseDTO>> getAllHabitsByUserId() {
+  public ResponseEntity<List<HabitResponseDTO>> getAllHabitsByUserId(
+      @AuthenticationPrincipal User currentUser) {
     List<Habit> habits = habitService.getAllHabits(currentUser.getId());
     List<HabitResponseDTO> habitResponseDTOS =
         habits.stream().map(habitMapper::toResponse).toList();
@@ -33,7 +32,8 @@ public class HabitController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<HabitResponseDTO> getHabitById(@PathVariable UUID id) {
+  public ResponseEntity<HabitResponseDTO> getHabitById(
+      @PathVariable UUID id, @AuthenticationPrincipal User currentUser) {
     HabitResponseDTO dto =
         habitMapper.toResponse(habitService.getHabitById(id, currentUser.getId()));
     return ResponseEntity.ok(dto);
@@ -41,7 +41,8 @@ public class HabitController {
 
   @PostMapping
   public ResponseEntity<HabitResponseDTO> createHabit(
-      @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
+      @Valid @RequestBody HabitRequestDTO habitRequestDTO,
+      @AuthenticationPrincipal User currentUser) {
     Habit habit =
         habitService.createHabit(habitMapper.toModel(habitRequestDTO), currentUser.getId());
     HabitResponseDTO responseDTO = habitMapper.toResponse(habit);
@@ -50,7 +51,9 @@ public class HabitController {
 
   @PutMapping("/{id}")
   public ResponseEntity<HabitResponseDTO> updateHabit(
-      @PathVariable UUID id, @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
+      @PathVariable UUID id,
+      @Valid @RequestBody HabitRequestDTO habitRequestDTO,
+      @AuthenticationPrincipal User currentUser) {
     Habit habit =
         habitService.updateHabit(id, habitMapper.toModel(habitRequestDTO), currentUser.getId());
     HabitResponseDTO updatedHabit = habitMapper.toResponse(habit);
@@ -58,7 +61,8 @@ public class HabitController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteHabit(@PathVariable UUID id) {
+  public ResponseEntity<Void> deleteHabit(
+      @PathVariable UUID id, @AuthenticationPrincipal User currentUser) {
     habitService.deleteHabitById(id, currentUser.getId());
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
