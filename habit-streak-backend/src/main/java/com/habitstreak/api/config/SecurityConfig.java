@@ -1,5 +1,7 @@
-package com.habitstreak.api.security;
+package com.habitstreak.api.config;
 
+import com.habitstreak.api.security.JwtAuthFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -13,13 +15,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
   private final JwtAuthFilter jwtAuthFilter;
-
-  public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
-    this.jwtAuthFilter = jwtAuthFilter;
-  }
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

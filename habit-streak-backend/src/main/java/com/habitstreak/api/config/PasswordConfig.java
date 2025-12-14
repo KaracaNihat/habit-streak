@@ -1,4 +1,4 @@
-package com.habitstreak.api.security;
+package com.habitstreak.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
