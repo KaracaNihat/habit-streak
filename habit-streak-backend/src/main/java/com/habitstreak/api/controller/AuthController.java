@@ -7,6 +7,7 @@ import com.habitstreak.api.model.User;
 import com.habitstreak.api.repository.UserRepository;
 import com.habitstreak.api.security.JwtUtil;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,18 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtUtil jwtUtil;
-
-  public AuthController(
-      UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
-    this.userRepository = userRepository;
-    this.passwordEncoder = passwordEncoder;
-    this.jwtUtil = jwtUtil;
-  }
 
   @PostMapping("/register")
   public void register(@Valid @RequestBody RegisterRequest request) {
