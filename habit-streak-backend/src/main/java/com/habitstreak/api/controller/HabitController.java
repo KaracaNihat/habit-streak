@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.*;
 public class HabitController {
   private final HabitService habitService;
   private final HabitMapper habitMapper;
+  User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
   @GetMapping
   public ResponseEntity<List<HabitResponseDTO>> getAllHabitsByUserId() {
-    User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     List<Habit> habits = habitService.getAllHabits(currentUser.getId());
     List<HabitResponseDTO> habitResponseDTOS =
         habits.stream().map(habitMapper::toResponse).toList();
@@ -33,7 +33,6 @@ public class HabitController {
 
   @GetMapping("/{id}")
   public ResponseEntity<HabitResponseDTO> getHabitById(@PathVariable UUID id) {
-    User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     HabitResponseDTO dto =
         habitMapper.toResponse(habitService.getHabitById(id, currentUser.getId()));
     return ResponseEntity.ok(dto);
@@ -42,8 +41,6 @@ public class HabitController {
   @PostMapping
   public ResponseEntity<HabitResponseDTO> createHabit(
       @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
-    // ToDo try extracting currentUser in root level for all method reduce duplication also in tests
-    User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Habit habit =
         habitService.createHabit(habitMapper.toModel(habitRequestDTO), currentUser.getId());
     HabitResponseDTO responseDTO = habitMapper.toResponse(habit);
@@ -53,7 +50,6 @@ public class HabitController {
   @PutMapping("/{id}")
   public ResponseEntity<HabitResponseDTO> updateHabit(
       @PathVariable UUID id, @Valid @RequestBody HabitRequestDTO habitRequestDTO) {
-    User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Habit habit =
         habitService.updateHabit(id, habitMapper.toModel(habitRequestDTO), currentUser.getId());
     HabitResponseDTO updatedHabit = habitMapper.toResponse(habit);
@@ -62,7 +58,6 @@ public class HabitController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteHabit(@PathVariable UUID id) {
-    User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     habitService.deleteHabitById(id, currentUser.getId());
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
