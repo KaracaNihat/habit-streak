@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.*;
 public class HabitController {
   private final HabitService habitService;
   private final HabitMapper habitMapper;
-  private final User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+  private final User currentUser =
+      (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
   @GetMapping
   public ResponseEntity<List<HabitResponseDTO>> getAllHabitsByUserId() {
