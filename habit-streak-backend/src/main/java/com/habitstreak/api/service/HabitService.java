@@ -14,12 +14,14 @@ import org.springframework.stereotype.Service;
 public class HabitService {
   private final HabitRepository habitRepository;
 
-  public List<Habit> getAllHabits() {
-    return habitRepository.findAll();
+  public List<Habit> getAllHabits(UUID userId) {
+    return habitRepository.findAllByUserId(userId);
   }
 
-  public Habit getHabitById(UUID id) {
-    return habitRepository.findById(id).orElseThrow(() -> new NotFoundException("Habit not found"));
+  public Habit getHabitById(UUID id, UUID userId) {
+    return habitRepository
+        .findByIdAndUserId(id, userId)
+        .orElseThrow(() -> new NotFoundException("Habit not found"));
   }
 
   public Habit createHabit(Habit habit, UUID userId) {
@@ -30,8 +32,8 @@ public class HabitService {
     return habitRepository.insert(habit);
   }
 
-  public Habit updateHabit(UUID id, Habit newData) {
-    Habit habit = getHabitById(id);
+  public Habit updateHabit(UUID id, Habit newData, UUID userId) {
+    Habit habit = getHabitById(id, userId);
     habit.setName(newData.getName());
     habit.setTargetPerWeek(newData.getTargetPerWeek());
     habit.setCompletedDays(newData.getCompletedDays());
@@ -39,7 +41,7 @@ public class HabitService {
     return habitRepository.save(habit);
   }
 
-  public void deleteHabitById(UUID id) {
-    habitRepository.deleteById(getHabitById(id).getId());
+  public void deleteHabitById(UUID id, UUID userId) {
+    habitRepository.deleteByIdAndUserId(getHabitById(id, userId).getId(), userId);
   }
 }

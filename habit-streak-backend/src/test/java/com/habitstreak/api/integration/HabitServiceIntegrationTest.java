@@ -31,7 +31,7 @@ class HabitServiceIntegrationTest {
     habit.setTargetPerWeek(5);
 
     Habit saved = habitService.createHabit(habit, userId);
-    Habit fetched = habitService.getHabitById(saved.getId());
+    Habit fetched = habitService.getHabitById(saved.getId(), userId);
 
     assertEquals(saved.getName(), fetched.getName());
     assertEquals(saved.getTargetPerWeek(), fetched.getTargetPerWeek());
