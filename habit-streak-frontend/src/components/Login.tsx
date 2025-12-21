@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {loginUser} from "./authApi";
+import {loginUser} from "../security/authApi";
 import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import {useNavigate} from "react-router-dom";
@@ -69,7 +69,7 @@ const Login: React.FC = () => {
                             Login
                         </Button>
                         <Typography textAlign="center">
-                            Don't have an account yet? <a href="/register">Register here</a>
+                            Don't have an account yet? <a href="/Register">Register here</a>
                         </Typography>
                     </Stack>
                 </form>

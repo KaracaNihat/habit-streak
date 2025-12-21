@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import Login from "./Login";
 import Dashboard from "./Dashboard";

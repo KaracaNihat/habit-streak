@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {registerUser} from "./authApi";
+import {registerUser} from "../security/authApi";
 import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import {useNavigate} from "react-router-dom";
@@ -68,7 +68,7 @@ const Register: React.FC = () => {
                             Create Account
                         </Button>
                         <Typography textAlign="center">
-                            Already have an account? <a href="/">Sign in here</a>
+                            Already have an account? <a href="/habit-streak-frontend/public">Sign in here</a>
                         </Typography>
                     </Stack>
                 </form>
