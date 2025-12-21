@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import {loginUser} from "./authApi";
+import {registerUser} from "./authApi";
 import {Button, Container, Stack, TextField, Typography} from "@mui/material";
-import SendIcon from '@mui/icons-material/Send';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import {useNavigate} from "react-router-dom";
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -12,17 +12,16 @@ const Login: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const res = await loginUser({email, password});
-            if (res.token) {
-                localStorage.setItem("jwt", res.token);
-                alert("Logged in!");
-                navigate("/dashboard");
+            const res = await registerUser({email, password});
+            if (res.status === 200) {
+                alert("Account Created Successfully!");
+                navigate("/");
             } else {
-                alert("Login failed: no token received");
+                alert("Registering failed: " + res.status);
             }
         } catch (err) {
             console.error(err);
-            alert("Login failed");
+            alert("Registering failed");
         }
     };
 
@@ -36,7 +35,7 @@ const Login: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <Stack spacing={2}>
                     <Typography variant="h4" component="h1" textAlign="center">
-                        Sign In
+                        Sign Up
                     </Typography>
                     <TextField
                         id="outlined-basic"
@@ -55,11 +54,11 @@ const Login: React.FC = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Email"
                         required/>
-                    <Button type="submit" variant="contained" endIcon={<SendIcon/>}>
-                        Login
+                    <Button type="submit" variant="contained" endIcon={<AddRoundedIcon/>}>
+                        Create Account
                     </Button>
                     <Typography textAlign="center">
-                        Don't have an account yet? <a href="/register">Register here</a>
+                        Already have an account? <a href="/">Sign in here</a>
                     </Typography>
                 </Stack>
             </form>
@@ -67,4 +66,4 @@ const Login: React.FC = () => {
     );
 };
 
-export default Login;
+export default Register;
