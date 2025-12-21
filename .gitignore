@@ -18,6 +18,9 @@ habit-streak-frontend/build/
 habit-streak-frontend/.env
 habit-streak-frontend/.idea/
 
+#root node modules
+node_modules
+
 # =================
 # IDE / Editor / OS
 # =================
