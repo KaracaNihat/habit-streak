@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
-import Login from "./Login";
-import Dashboard from "./Dashboard";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import PrivateRoute from "./PrivateRoute";
-import Register from "./Register";
+import PrivateRoute from "./components/PrivateRoute";
+import Register from "./components/Register";
+import "./index.css";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
