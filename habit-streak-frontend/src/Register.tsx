@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {registerUser} from "./authApi";
-import {Button, Container, Stack, TextField, Typography} from "@mui/material";
+import {Box, Button, Container, Stack, TextField, Typography} from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import {useNavigate} from "react-router-dom";
 
@@ -26,43 +26,54 @@ const Register: React.FC = () => {
     };
 
     return (
-        <Container maxWidth="sm" sx={{
-            minHeight: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-        }}>
-            <form onSubmit={handleSubmit}>
-                <Stack spacing={2}>
-                    <Typography variant="h4" component="h1" textAlign="center">
-                        Sign Up
-                    </Typography>
-                    <TextField
-                        id="outlined-basic"
-                        label="Email"
-                        variant="outlined"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email"
-                        required/>
-                    <TextField
-                        id="outlined-basic"
-                        label="Password"
-                        type="password"
-                        value={password}
-                        variant="outlined"
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Email"
-                        required/>
-                    <Button type="submit" variant="contained" endIcon={<AddRoundedIcon/>}>
-                        Create Account
-                    </Button>
-                    <Typography textAlign="center">
-                        Already have an account? <a href="/">Sign in here</a>
-                    </Typography>
-                </Stack>
-            </form>
-        </Container>
+        <Box
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#46a6e4"
+            }}
+        >
+            <Container maxWidth="sm"
+                       sx={{
+                           backgroundColor: "#ffffff",
+                           p: 4,
+                           borderRadius: 2,
+                           boxShadow: 3,
+                       }}>
+                <form onSubmit={handleSubmit}>
+                    <Stack spacing={2}>
+                        <Typography variant="h4" component="h1" textAlign="center">
+                            Sign Up
+                        </Typography>
+                        <TextField
+                            id="outlined-basic"
+                            label="Email"
+                            variant="outlined"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Email"
+                            required/>
+                        <TextField
+                            id="outlined-basic"
+                            label="Password"
+                            type="password"
+                            value={password}
+                            variant="outlined"
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Email"
+                            required/>
+                        <Button type="submit" variant="contained" endIcon={<AddRoundedIcon/>}>
+                            Create Account
+                        </Button>
+                        <Typography textAlign="center">
+                            Already have an account? <a href="/">Sign in here</a>
+                        </Typography>
+                    </Stack>
+                </form>
+            </Container>
+        </Box>
     );
 };
 
