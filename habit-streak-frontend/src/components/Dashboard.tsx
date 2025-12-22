@@ -28,21 +28,23 @@ const Dashboard: React.FC = () => {
 
     return (
         <Grid container spacing={2}>
-            <Container sx={{mt: 4}}>
-                <Typography variant="h4" gutterBottom>
-                    My Habits
-                </Typography>
+            <Container sx={{mt: 3}}>
+                <Box textAlign="center">
+                    <Typography variant="h3">
+                        My Habits
+                    </Typography>
+                </Box>
                 {habits.map((habit: Habit) => (
                     <Box sx={{
-                        p: 2,
-                        gap: 2,
+                        p: 1,
+                        gap: 1,
                         borderRadius: 2,
                         display: 'grid',
                         gridTemplateColumns: {md: '1fr 1fr'},
                     }}>
                         <Card elevation={3}>
                             <CardContent>
-                                <Typography variant={"h6"} sx={{ mb: 1 }}>
+                                <Typography variant={"h6"} sx={{mb: 1}}>
                                     {habit.name}
                                 </Typography>
                                 <Typography variant={"subtitle1"}>
