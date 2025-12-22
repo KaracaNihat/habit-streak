@@ -3,7 +3,7 @@ import api from "../security/axiosConfig";
 import {
     Box,
     Button,
-    Card,
+    Card, CardActions,
     CardContent,
     Chip,
     Container,
@@ -15,6 +15,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
+import {Delete} from "@mui/icons-material";
 
 interface Habit {
     id: string;
@@ -65,6 +66,11 @@ const Dashboard: React.FC = () => {
         setOpenDialog(false);
     }
 
+    const handleDelete = async (id: string) => {
+        await api.delete(`/api/habits/${id}`);
+        setHabits(habits.filter(h => h.id !== id));
+    }
+
     return (
         <Box sx={{minHeight: "100vh", backgroundColor: "#63a3e3"}}>
             <Grid container spacing={2}>
@@ -100,6 +106,11 @@ const Dashboard: React.FC = () => {
                                         variant="outlined"
                                     />
                                 </CardContent>
+                                <CardActions sx={{ justifyContent: "flex-end" }}>
+                                    <Button size="small" onClick={() => handleDelete(habit.id)}>
+                                        <Delete color="error"/>
+                                    </Button>
+                                </CardActions>
                             </Card>
                         </Box>
                     ))}
