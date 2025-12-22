@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import api from "../security/axiosConfig";
-import {Box, Card, CardContent, Container, Grid, Typography} from "@mui/material";
+import {Box, Card, CardContent, Chip, Container, Grid, Typography} from "@mui/material";
 
 interface Habit {
     id: string;
@@ -36,24 +36,27 @@ const Dashboard: React.FC = () => {
                         </Typography>
                     </Box>
                     {habits.map((habit: Habit) => (
-                        <Box sx={{
-                            p: 1,
-                            gap: 1,
-                            borderRadius: 2,
-                            display: 'grid',
-                            gridTemplateColumns: {md: '1fr 1fr'},
-                        }}>
-                            <Card elevation={3}>
+                        <Box
+                            key={habit.id}
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                mb: 2,
+                            }}
+                        >
+                            <Card elevation={3} sx={{width: '100%', maxWidth: 500}}>
                                 <CardContent>
-                                    <Typography variant={"h6"} sx={{mb: 1}}>
+                                    <Typography variant="h6" sx={{mb: 1}}>
                                         {habit.name}
                                     </Typography>
-                                    <Typography variant={"subtitle1"}>
+                                    <Typography variant="subtitle1">
                                         Completed: {habit.completedDays.length}/{habit.targetPerWeek}
                                     </Typography>
-                                    <Typography variant={"subtitle1"}>
-                                        Streak: {habit.streak}
-                                    </Typography>
+                                    <Chip
+                                        label={`${habit.streak} 🔥`}
+                                        sx={{mt: 1}}
+                                        variant="outlined"
+                                    />
                                 </CardContent>
                             </Card>
                         </Box>
