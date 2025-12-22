@@ -101,7 +101,7 @@ const Dashboard: React.FC = () => {
                                         Completed: {habit.completedDays.length}/{habit.targetPerWeek}
                                     </Typography>
                                     <Chip
-                                        label={`${habit.streak} 🔥`}
+                                        label={habit.streak ? `${habit.streak} 🔥` : "0 🔥"}
                                         sx={{mt: 1}}
                                         variant="outlined"
                                     />
