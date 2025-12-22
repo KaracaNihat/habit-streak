@@ -27,38 +27,40 @@ const Dashboard: React.FC = () => {
     }, []);
 
     return (
-        <Grid container spacing={2}>
-            <Container sx={{mt: 3}}>
-                <Box textAlign="center">
-                    <Typography variant="h3">
-                        My Habits
-                    </Typography>
-                </Box>
-                {habits.map((habit: Habit) => (
-                    <Box sx={{
-                        p: 1,
-                        gap: 1,
-                        borderRadius: 2,
-                        display: 'grid',
-                        gridTemplateColumns: {md: '1fr 1fr'},
-                    }}>
-                        <Card elevation={3}>
-                            <CardContent>
-                                <Typography variant={"h6"} sx={{mb: 1}}>
-                                    {habit.name}
-                                </Typography>
-                                <Typography variant={"subtitle1"}>
-                                    Completed: {habit.completedDays.length}/{habit.targetPerWeek}
-                                </Typography>
-                                <Typography variant={"subtitle1"}>
-                                    Streak: {habit.streak}
-                                </Typography>
-                            </CardContent>
-                        </Card>
+        <Box sx={{minHeight: "100vh", backgroundColor: "#63a3e3"}}>
+            <Grid container spacing={2}>
+                <Container sx={{mt: 3}}>
+                    <Box textAlign="center">
+                        <Typography variant="h3" sx={{mb: 2}}>
+                            My Habits
+                        </Typography>
                     </Box>
-                ))}
-            </Container>
-        </Grid>
+                    {habits.map((habit: Habit) => (
+                        <Box sx={{
+                            p: 1,
+                            gap: 1,
+                            borderRadius: 2,
+                            display: 'grid',
+                            gridTemplateColumns: {md: '1fr 1fr'},
+                        }}>
+                            <Card elevation={3}>
+                                <CardContent>
+                                    <Typography variant={"h6"} sx={{mb: 1}}>
+                                        {habit.name}
+                                    </Typography>
+                                    <Typography variant={"subtitle1"}>
+                                        Completed: {habit.completedDays.length}/{habit.targetPerWeek}
+                                    </Typography>
+                                    <Typography variant={"subtitle1"}>
+                                        Streak: {habit.streak}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Box>
+                    ))}
+                </Container>
+            </Grid>
+        </Box>
     );
 };
 
