@@ -1,18 +1,38 @@
 import React, {useEffect, useState} from "react";
 import api from "../security/axiosConfig";
-import {Box, Card, CardContent, Chip, Container, Grid, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    Chip,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Grid,
+    TextField,
+    Typography
+} from "@mui/material";
 
 interface Habit {
     id: string;
     name: string;
     targetPerWeek: number;
-    completedDays: Date[];
+    completedDays: string[];
     createdAt: string;
     streak: number;
 }
 
 const Dashboard: React.FC = () => {
     const [habits, setHabits] = useState<Habit[]>([]);
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const [habitName, setHabitName] = useState("");
+    const [habitTarget, setHabitTarget] = useState(1);
+    const [completedDays, setCompletedDays] = useState<string[]>([]);
+    const isCreateDisabled = habitName.trim() === "" || habitTarget <= 0;
+
 
     useEffect(() => {
         const getHabits = async () => {
@@ -26,6 +46,25 @@ const Dashboard: React.FC = () => {
         getHabits();
     }, []);
 
+    const handleOpenCreate = () => {
+        setOpenDialog(true);
+        setHabitName("");
+        setHabitTarget(1);
+        setCompletedDays([]);
+    }
+
+    const handleCreateHabit = async () => {
+        const payload = {
+            name: habitName,
+            targetPerWeek: habitTarget,
+            completedDays: completedDays,
+        }
+
+        const res = await api.post("/api/habits", payload);
+        setHabits([...habits, res.data]);
+        setOpenDialog(false);
+    }
+
     return (
         <Box sx={{minHeight: "100vh", backgroundColor: "#63a3e3"}}>
             <Grid container spacing={2}>
@@ -34,6 +73,9 @@ const Dashboard: React.FC = () => {
                         <Typography variant="h3" sx={{mb: 2}}>
                             My Habits
                         </Typography>
+                        <Button variant="contained" sx={{mt: 2, mb: 3, bgcolor: "#14e316"}} onClick={handleOpenCreate}>
+                            Add Habit ➕
+                        </Button>
                     </Box>
                     {habits.map((habit: Habit) => (
                         <Box
@@ -44,7 +86,7 @@ const Dashboard: React.FC = () => {
                                 mb: 2,
                             }}
                         >
-                            <Card elevation={3} sx={{width: '100%', maxWidth: 500}}>
+                            <Card elevation={3} sx={{width: '100%', maxWidth: 700}}>
                                 <CardContent>
                                     <Typography variant="h6" sx={{mb: 1}}>
                                         {habit.name}
@@ -63,6 +105,31 @@ const Dashboard: React.FC = () => {
                     ))}
                 </Container>
             </Grid>
+            <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+                <DialogTitle>Add Habit</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        label="Name"
+                        fullWidth
+                        sx={{mt: 1}}
+                        value={habitName}
+                        onChange={e => setHabitName(e.target.value)}
+                        required
+                    />
+                    <TextField
+                        label="Target Per Week"
+                        type="number"
+                        fullWidth
+                        sx={{mt: 1}}
+                        value={habitTarget}
+                        onChange={e => setHabitTarget(Number(e.target.value))}
+                        required
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCreateHabit} disabled={isCreateDisabled}>Create</Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 };
