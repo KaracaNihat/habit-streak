@@ -1,4 +1,14 @@
-# Habit Streak – CS50 Final Project
+# Habit Streak
+## 🎥 Demo: 
+Video link: https://youtu.be/132uQSv5n70
+
+In the demo video included in the CS50 submission, I demonstrate:
+  * User login
+  * Habit creation
+  * Habit completion and streak increment
+  * Habit deletion
+
+---
 
 ## 📌 Description
 
@@ -68,6 +78,46 @@ habit-streak
 
 ---
 
+## 🧠 Design Decisions
+
+During the development of Habit Streak, several design decisions were made to balance simplicity, learning goals, and real-world usability.
+
+One of the most important decisions was choosing a full-stack architecture instead of a single-page or frontend-only application. By building both a backend and frontend, the project demonstrates an understanding of how client-server systems work, including authentication, API design, and data persistence.
+
+For authentication, JWT (JSON Web Tokens) were chosen over session-based authentication. JWTs allow the backend to remain stateless, which simplifies scalability and aligns with modern REST API best practices. Tokens are issued on login and attached to subsequent API requests, ensuring that only authenticated users can access protected resources.
+
+MongoDB was selected as the database instead of a relational SQL database. Since habits are document-oriented and may evolve with additional fields (such as reminders, notes, or history), MongoDB provides flexibility without requiring frequent schema migrations. Using MongoDB Atlas also allowed the application to be hosted in the cloud without managing database infrastructure locally.
+
+On the frontend, React with TypeScript was chosen to enforce type safety and reduce runtime errors. Material UI was used to quickly build a clean, responsive interface while focusing on functionality rather than custom styling from scratch.
+
+The habit streak logic is currently handled in the frontend. This decision was made to keep the backend simpler during initial development. While this approach works well for a single-user application, moving this logic entirely to the backend would be a logical improvement for future scalability and data integrity.
+
+## 🏗️ Detailed Project Structure
+
+The project is organized as a monorepository containing both frontend and backend code to simplify development and deployment.
+
+The habit-streak-backend folder contains the Spring Boot application. It follows a layered architecture with controllers handling HTTP requests, services implementing business logic, repositories managing database access, and DTOs ensuring clean data transfer between layers. Security configuration, JWT utilities, and global exception handling are also centralized to keep the codebase maintainable and scalable.
+
+The habit-streak-frontend folder contains the React application. It includes reusable components, page-level views such as login, registration, and dashboard, and an Axios configuration file responsible for attaching JWT tokens to API requests. State is managed locally using React hooks to keep the application simple and easy to understand.
+
+Both parts of the project communicate via RESTful APIs, making the architecture modular and suitable for future extensions such as mobile applications.
+
+## 🚀 Future Improvements
+
+While Habit Streak is fully functional, there are several features that could be added in the future to enhance the user experience.
+
+One potential improvement is adding a calendar view to visualize habit completion over time. This would give users better insight into their consistency. Another improvement would be daily or weekly reminders, either via email or push notifications, to encourage habit completion.
+
+The streak logic could also be fully migrated to the backend to ensure consistency across devices and prevent manipulation. Additional analytics, such as charts showing habit progress over months, could further motivate users.
+
+Finally, improving mobile responsiveness or developing a dedicated mobile application would make Habit Streak more accessible for daily use.
+
+## 🤖 AI Usage
+
+AI-based tools such as ChatGPT were used as a learning aid during this project. These tools were utilized to clarify concepts, discuss architectural decisions, and receive feedback on implementation ideas. All core logic, structure, and code were written and fully understood by the author. AI tools served only as a productivity aid and did not replace independent problem-solving or design decisions.
+
+---
+
 ## ▶️ How to Run the Project Locally
 
 ### Prerequisites
@@ -112,17 +162,6 @@ habit-streak
   * Authentication is handled using JWT tokens
   * Tokens are issued upon login and attached to protected API requests
   * Users must be authenticated to access habit-related endpoints
-
----
-
-## 🎥 Demo
-
-A demo video is included in the CS50 submission demonstrating:
-  * User registration and login
-  * Habit creation
-  * Habit completion and streak increment
-  * Habit deletion
-  * Overview of the application architecture
 
 ---
 
