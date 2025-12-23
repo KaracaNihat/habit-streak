@@ -30,19 +30,32 @@ const Login: React.FC = () => {
         <Box
             sx={{
                 minHeight: "100vh",
+                backgroundColor: "#46a6e4",
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: "#46a6e4"
             }}
         >
-            <Container maxWidth="sm"
+            <Typography
+                variant="h1"
+                component="h1"
                 sx={{
-                backgroundColor: "#ffffff",
-                p: 4,
-                borderRadius: 2,
-                boxShadow: 3,
-            }}>
+                    color: "#ffffff",
+                    fontWeight: "bold",
+                    mb: 6,
+                    textAlign: "center",
+                }}
+            >
+                🔥Habit Streak🔥
+            </Typography>
+            <Container maxWidth="sm"
+                       sx={{
+                           backgroundColor: "#ffffff",
+                           p: 4,
+                           borderRadius: 2,
+                           boxShadow: 3,
+                       }}>
                 <form onSubmit={handleSubmit}>
                     <Stack spacing={2}>
                         <Typography variant="h4" component="h1" textAlign="center">

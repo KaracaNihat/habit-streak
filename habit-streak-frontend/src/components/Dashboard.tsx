@@ -96,7 +96,16 @@ const Dashboard: React.FC = () => {
             <Grid container spacing={2}>
                 <Container sx={{mt: 3}}>
                     <Box textAlign="center">
-                        <Typography variant="h3" sx={{mb: 2}}>
+                        <Typography
+                            variant="h2"
+                            component="h1"
+                            sx={{
+                                color: "#ffffff",
+                                fontWeight: "bold",
+                                mb: 2,
+                                textAlign: "center",
+                            }}
+                        >
                             My Habits
                         </Typography>
                         <Button variant="contained" sx={{mt: 2, mb: 3, bgcolor: "#14e316"}} onClick={handleOpenCreate}>

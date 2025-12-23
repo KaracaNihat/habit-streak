@@ -29,12 +29,25 @@ const Register: React.FC = () => {
         <Box
             sx={{
                 minHeight: "100vh",
+                backgroundColor: "#46a6e4",
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: "#46a6e4"
             }}
         >
+            <Typography
+                variant="h1"
+                component="h1"
+                sx={{
+                    color: "#ffffff",
+                    fontWeight: "bold",
+                    mb: 6,
+                    textAlign: "center",
+                }}
+            >
+                🔥Habit Streak🔥
+            </Typography>
             <Container maxWidth="sm"
                        sx={{
                            backgroundColor: "#ffffff",
@@ -68,7 +81,7 @@ const Register: React.FC = () => {
                             Create Account
                         </Button>
                         <Typography textAlign="center">
-                            Already have an account? <a href="/habit-streak-frontend/public">Sign in here</a>
+                            Already have an account? <a href="/">Sign in here</a>
                         </Typography>
                     </Stack>
                 </form>
