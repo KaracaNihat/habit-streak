@@ -13,5 +13,5 @@ public class HabitRequestDTO {
   @NotBlank private String name;
   @Positive private Integer targetPerWeek;
   private List<LocalDate> completedDays;
-  @Positive private Integer streak;
+  private Integer streak;
 }
