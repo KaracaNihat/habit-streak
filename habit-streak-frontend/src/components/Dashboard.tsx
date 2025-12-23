@@ -3,7 +3,8 @@ import api from "../security/axiosConfig";
 import {
     Box,
     Button,
-    Card, CardActions,
+    Card,
+    CardActions,
     CardContent,
     Chip,
     Container,
@@ -15,7 +16,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {Delete} from "@mui/icons-material";
+import {Delete, TaskAlt} from "@mui/icons-material";
 
 interface Habit {
     id: string;
@@ -71,6 +72,25 @@ const Dashboard: React.FC = () => {
         setHabits(habits.filter(h => h.id !== id));
     }
 
+    const handleMarkAsDone = async (habit: Habit) => {
+        const today = new Date().toISOString().split("T")[0];
+        if (habit.completedDays.includes(today)) {
+            alert("Already marked as completed for today");
+            return
+        }
+        habit.completedDays.push(today);
+        if (habit.completedDays.length >= habit.targetPerWeek) {
+            habit.streak += 1;
+            habit.completedDays = [];
+        }
+        const res = await api.put(`/api/habits/${habit.id}`, habit);
+        const updatedHabits = habits.map(h =>
+            h.id === res.data.id ? res.data : h
+        );
+
+        setHabits(updatedHabits);
+    }
+
     return (
         <Box sx={{minHeight: "100vh", backgroundColor: "#63a3e3"}}>
             <Grid container spacing={2}>
@@ -106,7 +126,10 @@ const Dashboard: React.FC = () => {
                                         variant="outlined"
                                     />
                                 </CardContent>
-                                <CardActions sx={{ justifyContent: "flex-end" }}>
+                                <CardActions sx={{justifyContent: "flex-end"}}>
+                                    <Button size="small" onClick={() => handleMarkAsDone(habit)}>
+                                        <TaskAlt color="action"/>
+                                    </Button>
                                     <Button size="small" onClick={() => handleDelete(habit.id)}>
                                         <Delete color="error"/>
                                     </Button>
